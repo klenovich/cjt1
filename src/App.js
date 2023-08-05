@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { useNavigate } from 'react-router';
-
+import { BrowserRouter as Router, Route, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import Login from './components/login';
