@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import Login from './components/login';
-import Register from './components/::gister';
-import Dashboard from './components/Dashboard';
+import Register from './components/register';
+import Dashboard from './components/dashboard';
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const checkLoggedIn = async () => {
@@ -16,6 +17,8 @@ const App = () => {
         const response = await axios.get('/api/checkLoggedIn');
         if (response.data.loggedIn) {
           setLoggedIn(true);
+        } else {
+          navigate('/login');
         }
       } catch (error) {
         console.error(error);
@@ -24,7 +27,7 @@ const App = () => {
     };
 
     checkLoggedIn();
-  }, []);
+  }, [navigate]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -32,20 +35,15 @@ const App = () => {
 
   return (
     <Router>
-      <Switch>
-        <Route exact path="/login">
-          {loggedIn ? <Redirect to="/dashboard" /> : <Login setLoggedIn={setLoggedIn} />}
-        </Route>
-        <Route exact path="/register">
-          {loggedIn ? <Redirect to="/dashboard" /> : <Register />}
-        </Route>
-        <Route exact path="/dashboard">
-          {loggedIn ? <Dashboard /> : <Redirect to="/login" />}
-        </Route>
-        <Route path="/">
-          <Redirect to="/login" />
-        </Route>
-      </Switch>
+      <Route exact path="/login">
+        {loggedIn ? <Dashboard /> : <Login setLoggedIn={setLoggedIn} />}
+      </Route>
+      <Route exact path="/register">
+        {loggedIn ? <Dashboard /> : <Register />}
+      </Route>
+      <Route exact path="/dashboard">
+        {loggedIn ? <Dashboard /> : <Login setLoggedIn={setLoggedIn} />}
+      </Route>
     </Router>
   );
 };
