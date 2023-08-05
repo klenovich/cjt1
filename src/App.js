@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Redirect, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import Login from './components/login';
@@ -36,7 +36,7 @@ const App = () => {
   return (
     <Router>
       <Route exact path="/">
-        {loggedIn ? <Dashboard /> : <Redirect to="/login" />}
+        {loggedIn ? <Dashboard /> : navigate('/login')}
       </Route>
       <Route exact path="/login">
         {loggedIn ? <Dashboard /> : <Login setLoggedIn={setLoggedIn} />}
@@ -45,7 +45,7 @@ const App = () => {
         {loggedIn ? <Dashboard /> : <Register />}
       </Route>
       <Route exact path="/dashboard">
-        {loggedIn ? <Dashboard /> : <Redirect to="/login" />}
+        {loggedIn ? <Dashboard /> : navigate('/login')}
       </Route>
     </Router>
   );
