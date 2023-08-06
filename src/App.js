@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Redirect } from 'react-router-dom'; // Add this line
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 import Login from './components/login';
 import Register from './components/register';
 import Dashboard from './components/dashboard';
+import Profile from './components/profile'; // Add this line
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -34,7 +35,7 @@ const App = () => {
   return (
     <Router>
       <Route exact path="/">
-        {loggedIn ? <Dashboard /> : <Redirect to="/login" />} {/* Update the import */}
+        {loggedIn ? <Dashboard /> : <Redirect to="/login" />}
       </Route>
       <Route exact path="/login">
         {loggedIn ? <Dashboard /> : <Login setLoggedIn={setLoggedIn} />}
@@ -43,7 +44,10 @@ const App = () => {
         {loggedIn ? <Dashboard /> : <Register />}
       </Route>
       <Route exact path="/dashboard">
-        {loggedIn ? <Dashboard /> : <Redirect to="/login" />} {/* Update the import */}
+        {loggedIn ? <Dashboard /> : <Redirect to="/login" />}
+      </Route>
+      <Route exact path="/profile"> {/* Add this Route */}
+        {loggedIn ? <Profile /> : <Redirect to="/login" />}
       </Route>
     </Router>
   );
