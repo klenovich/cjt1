@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Redirect } from 'react-router-dom';
+import { BrowserRouter as Routes, Route } from 'react-router-dom';
+import { redirect } from 'react-router-dom';
 import axios from 'axios';
 
 import Login from './components/login';
@@ -33,9 +33,9 @@ const App = () => {
   }
 
   return (
-    <Router>
+    <Routes>
       <Route exact path="/">
-        {loggedIn ? <Dashboard /> : <Redirect to="/login" />}
+        {loggedIn ? <Dashboard /> : <redirect to="/login" />}
       </Route>
       <Route exact path="/login">
         {loggedIn ? <Dashboard /> : <Login setLoggedIn={setLoggedIn} />}
@@ -44,12 +44,12 @@ const App = () => {
         {loggedIn ? <Dashboard /> : <Register />}
       </Route>
       <Route exact path="/dashboard">
-        {loggedIn ? <Dashboard /> : <Redirect to="/login" />}
+        {loggedIn ? <Dashboard /> : redirect="/login"}
       </Route>
-      <Route exact path="/profile"> {/* Add this Route */}
-        {loggedIn ? <Profile /> : <Redirect to="/login" />}
+      <Route exact path="/profile">
+        {loggedIn ? <Profile /> : redirect="/login"}
       </Route>
-    </Router>
+    </Routes>
   );
 };
 
